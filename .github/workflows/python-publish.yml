@@ -30,7 +30,7 @@ on:
 jobs:
   deployDev:
     name: Deploy to Development
-    if: github.ref_type == 'tag' 
+    #if: github.ref_type == 'tag' 
     runs-on: ubuntu-latest
     environment:
       name: Drive-development
