@@ -9,4 +9,4 @@ class TestBasicOperation:
         assert 1 == BasicOperation.sub(3,2)
         
     def test_mul(self):
-        assert 6 == BasicOperation.mul(3,1)
+        assert 6 == BasicOperation.mul(3,2)
