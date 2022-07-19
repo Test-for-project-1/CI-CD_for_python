@@ -58,3 +58,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install zip
           zip -r archive.zip *
+    - name: deployment
+      uses: chrnorm/deployment-action@v2
+      id: deployment
+      with:
+          token: '${{ github.token }}'
+          environment-url: https://drive.google.com/drive/folders/1opYibO_CQTVMNVLa6r8eQgr83LUl7OhG?usp=sharing
+          environment: Drive-development
