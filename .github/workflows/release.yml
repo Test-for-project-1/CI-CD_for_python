@@ -25,11 +25,11 @@ on:
           required: false 
           type: string
         Pre_Release:
-          description: 'check if it is a pre-release'
+          description: 'To Do Pre-Release'
           type: boolean
           default: false
           required: false
-                
+          
 jobs:
   Test:
     runs-on: ubuntu-latest
@@ -67,29 +67,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          tag_name: ${{ inputs.Tag }}
-          release_name: Release ${{ inputs.Release_Name }}
-          draft: false
-          prerelease: false
-      
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./my-artifact.zip
-          asset_name: my-artifact.zip
-          asset_content_type: application/zip
-          
     - name: Upload a Build Artifact
+      id: Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
         name: artifact
@@ -101,3 +80,17 @@ jobs:
         if-no-files-found: error
         retention-days: 10
       
+    - name: Release
+      uses: softprops/action-gh-release@v0.1.14
+      with: 
+        # Note-worthy description of changes in release
+        body: ${{ inputs.Release_Note }}
+        # Gives the release a custom name. Defaults to tag name
+        name: ${{ inputs.Release_Name }}
+        # Gives a tag name. Defaults to github.GITHUB_REF
+        tag_name: ${{ inputs.Tag }}
+        # Identify the release as a prerelease. Defaults to false
+        prerelease: ${{ inputs.Pre_Release }}
+        # Whether to automatically generate the name and body for this release. If name is specified, the specified name will be used; otherwise, a name will be automatically generated. If body is specified, the body will be pre-pended to the automatically generated notes.
+        generate_release_notes: true
+        files: '*artifact*'
