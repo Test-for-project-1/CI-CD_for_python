@@ -43,7 +43,9 @@ jobs:
       
     - name: Archive files
       run: |
-          tar cfzv Linux-Artifact.tar.gz $GITHUB_WORKSPACE/BasicOperation.py $GITHUB_WORKSPACE/requirements.txt $GITHUB_WORKSPACE/LICENSE $GITHUB_WORKSPACE/README.md
+          echo "current directory"
+          ls
+          tar cfzv Linux-Artifact.tar.gz BasicOperation.py requirements.txt LICENSE README.md
           
     - name: Release
       uses: softprops/action-gh-release@v0.1.14
