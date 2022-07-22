@@ -32,7 +32,7 @@ on:
           
 jobs:
   Test:
-    uses: ./.github/workflows/PR_workflow
+    uses: ./.github/workflows/PR_workflow.yml
     
   CreateRelease:
    runs-on: ubuntu-latest
