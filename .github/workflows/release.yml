@@ -41,6 +41,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
+    - name: Archive files
+      run: |
+          tar cfzv Linux-Artifact.tar.gz $GITHUB_WORKSPACE/BasicOperation.py $GITHUB_WORKSPACE/requirements.txt $GITHUB_WORKSPACE/LICENSE $GITHUB_WORKSPACE/README.md
+          
     - name: Release
       uses: softprops/action-gh-release@v0.1.14
       with: 
@@ -54,8 +58,4 @@ jobs:
         prerelease: ${{ inputs.Pre_Release }}
         # Whether to automatically generate the name and body for this release. If name is specified, the specified name will be used; otherwise, a name will be automatically generated. If body is specified, the body will be pre-pended to the automatically generated notes.
         generate_release_notes: true
-        files: |
-          ${{ github.workspace }}/BasicOperation.py
-          ${{ github.workspace }}/requirements.txt
-          ${{ github.workspace }}/LICENSE
-          ${{ github.workspace }}/README.md
+        files: ${{ github.workspace }}/Linux-Artifact.tar.gz
